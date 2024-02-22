@@ -1,26 +1,25 @@
-import sqlite3
-import os
 from fastapi import FastAPI
+from dbcrud import DBCrud
+from models.data import Data
+import sqlite3
 
-# Checks if DB didn't exist prior to connection/creation
-db_exists = os.path.exists("tutorial.db")
+#Connector object
+con = DBCrud()
 
-con = sqlite3.connect("tutorial.db")
-cur = con.cursor()
+#Generate Tables
+con.create_table()
 
-if not db_exists:
-    print("Creating Tables")
-    cur.execute("CREATE TABLE shortener(link, shortened_id)")
+data = Data(user_url = "url_test", url_identifier = "identificador_teste")
+con.create_data(data)
 
-res = cur.execute("SELECT link FROM shortener")
-
-#fetchall -> Returns entire query as a list, each item as tuple
-queryAsList = res.fetchall()
-print(queryAsList)
-
-# Test FastAPI -> 'uvicorn main:app --reload' to run server
+#FastAPI -> 'uvicorn main:app --reload' to run server
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return "Test_Run"
+@app.get("/db_url/")
+def read():
+    connection = sqlite3.connect(con.db_name)
+    cur = connection.cursor()
+    res = cur.execute("SELECT * FROM data")
+    queryAsList = res.fetchall()
+    connection.close()
+    return queryAsList
