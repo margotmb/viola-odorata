@@ -30,10 +30,12 @@ class DBCrud:
         if res_teste.fetchone() is None:
             cur.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)", (data.user_url, data.url_identifier))
             connection.commit()
+            connection.close()
             return "DATA CREATED:" + str(data.user_url) + " -> " + str(data.url_identifier)
         else:
+            connection.close()
             return "DATA ALREADY EXISTS"
-        connection.close()
+
 
     def read_url(self, data_string = None):
         connection = sqlite3.connect(self.__db_name)
