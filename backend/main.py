@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from dbcrud import DBCrud
 from models.data import Data
 import sqlite3
@@ -15,11 +16,8 @@ con.create_data(data)
 #FastAPI -> 'uvicorn main:app --reload' to run server
 app = FastAPI()
 
-@app.get("/db_url/")
-def read():
-    connection = sqlite3.connect(con.db_name)
-    cur = connection.cursor()
-    res = cur.execute("SELECT * FROM data")
-    queryAsList = res.fetchall()
-    connection.close()
-    return queryAsList
+@app.get("/{url_id}/")
+def read(url_id):
+    #returns tuple
+    query = con.read_url(url_id)
+    return query[0]
