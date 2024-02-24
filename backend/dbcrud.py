@@ -20,14 +20,27 @@ class DBCrud:
         )
         """)
         connection.commit()
-        print("TABLE CREATED")
         connection.close()
 
     
     def create_data(self, data: Data):
         connection = sqlite3.connect(self.__db_name)
-        cursor = connection.cursor()
-        cursor.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)", (data.user_url, data.url_identifier))
-        connection.commit()
-        print("DATA CREATED:" + str(data.user_url) + " -> " + str(data.url_identifier) )
+        cur = connection.cursor()
+        res_teste = cur.execute("SELECT * from data WHERE user_url LIKE ?", [data.user_url])
+        if res_teste.fetchone() is None:
+            cur.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)", (data.user_url, data.url_identifier))
+            connection.commit()
+            print("DATA CREATED:" + str(data.user_url) + " -> " + str(data.url_identifier) )
+        else:
+            print("DATA ALREADY EXISTS")
         connection.close()
+
+    def read_url(self, data_string = None):
+        connection = sqlite3.connect(self.__db_name)
+        cur = connection.cursor()
+        res = cur.execute("SELECT user_url from data WHERE url_identifier LIKE ?", [data_string])
+        query = res.fetchone()
+        connection.close()
+        return query
+    
+
