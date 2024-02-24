@@ -30,9 +30,9 @@ class DBCrud:
         if res_teste.fetchone() is None:
             cur.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)", (data.user_url, data.url_identifier))
             connection.commit()
-            print("DATA CREATED:" + str(data.user_url) + " -> " + str(data.url_identifier) )
+            return "DATA CREATED:" + str(data.user_url) + " -> " + str(data.url_identifier)
         else:
-            print("DATA ALREADY EXISTS")
+            return "DATA ALREADY EXISTS"
         connection.close()
 
     def read_url(self, data_string = None):
