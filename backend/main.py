@@ -19,7 +19,7 @@ def get_random_string(length):
     result_str = ''.join(random.choice(string.ascii_letters) for i in range(length))
     return result_str
 
-#FastAPI -> 'uvicorn main:app --reload' to run server
+#FastAPI -> 'uvicorn main:app --reload' to run local server
 app = FastAPI()
 
 @app.get("/")
