@@ -9,6 +9,7 @@ class DBCrud:
     @property
     def db_name(self):
         return self.__db_name
+
     def create_table(self):
         connection = sqlite3.connect(self.__db_name)
         cursor = connection.cursor()
@@ -22,7 +23,6 @@ class DBCrud:
         connection.commit()
         connection.close()
 
-    
     def create_data(self, data: Data):
         connection = sqlite3.connect(self.__db_name)
         cur = connection.cursor()
@@ -36,7 +36,6 @@ class DBCrud:
             connection.close()
             return "DATA ALREADY EXISTS"
 
-
     def read_url(self, data_string = None):
         connection = sqlite3.connect(self.__db_name)
         cur = connection.cursor()
@@ -44,5 +43,3 @@ class DBCrud:
         query = res.fetchone()
         connection.close()
         return query
-    
-
