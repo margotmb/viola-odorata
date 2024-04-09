@@ -1,6 +1,6 @@
 import sqlite3
-import os
 from models.data import Data
+
 
 class DBCrud:
     def __init__(self):
@@ -26,9 +26,11 @@ class DBCrud:
     def create_data(self, data: Data):
         connection = sqlite3.connect(self.__db_name)
         cur = connection.cursor()
-        res_teste = cur.execute("SELECT * from data WHERE user_url LIKE ?", [data.user_url])
+        res_teste = cur.execute(
+            "SELECT * from data WHERE user_url LIKE ?", [data.user_url])
         if res_teste.fetchone() is None:
-            cur.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)", (data.user_url, data.url_identifier))
+            cur.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)",
+                        (data.user_url, data.url_identifier))
             connection.commit()
             connection.close()
             return "DATA CREATED:" + str(data.user_url) + " -> " + str(data.url_identifier)
@@ -36,10 +38,11 @@ class DBCrud:
             connection.close()
             return "DATA ALREADY EXISTS"
 
-    def read_url(self, data_string = None):
+    def read_url(self, data_string=None):
         connection = sqlite3.connect(self.__db_name)
         cur = connection.cursor()
-        res = cur.execute("SELECT user_url from data WHERE url_identifier LIKE ?", [data_string])
+        res = cur.execute(
+            "SELECT user_url from data WHERE url_identifier LIKE ?", [data_string])
         query = res.fetchone()
         connection.close()
         return query
