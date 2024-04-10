@@ -31,9 +31,8 @@ def home():
     return "Homepage"
 
 
-@app.get("/{url_id}/")
+@app.get("/{url_id}")
 def read(url_id):
-    # returns tuple
     query = con.read_url(url_id)
     if query:
         return RedirectResponse(query[0])
@@ -46,4 +45,4 @@ def create_url_id(user_url):
     url_id = get_random_string(8)
     res = con.create_data(Data(user_url=user_url, url_identifier=url_id))
     print(res)
-    return url_id
+    return {"url_id": url_id}
