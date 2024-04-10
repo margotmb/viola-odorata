@@ -1,5 +1,6 @@
 import sqlite3
 from models.data import Data
+import re
 
 
 class DBCrud:
@@ -24,19 +25,22 @@ class DBCrud:
         connection.close()
 
     def create_data(self, data: Data):
+        regex_result = re.search("^http*", data.user_url)
+        if (regex_result is None):
+            data.user_url = "https://" + data.user_url
         connection = sqlite3.connect(self.__db_name)
         cur = connection.cursor()
-        res_teste = cur.execute(
-            "SELECT * from data WHERE user_url LIKE ?", [data.user_url])
-        if res_teste.fetchone() is None:
-            cur.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)",
-                        (data.user_url, data.url_identifier))
-            connection.commit()
-            connection.close()
-            return "DATA CREATED:" + str(data.user_url) + " -> " + str(data.url_identifier)
-        else:
-            connection.close()
-            return "DATA ALREADY EXISTS"
+        # res_teste = cur.execute(
+        # "SELECT * from data WHERE user_url LIKE ?", [data.user_url])
+       #  if res_teste.fetchone() is None:
+        cur.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)",
+                    (data.user_url, data.url_identifier))
+        connection.commit()
+        connection.close()
+        return "DATA CREATED:" + str(data.user_url) + " -> " + str(data.url_identifier)
+        # else:
+        # connection.close()
+        # return "DATA ALREADY EXISTS"
 
     def read_url(self, data_string=None):
         connection = sqlite3.connect(self.__db_name)
