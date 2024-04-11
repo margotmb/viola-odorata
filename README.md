@@ -2,4 +2,4 @@ URL Shortener - Study
 
 Backend Python FastAPI
 
-FrontEnd Reactjs (ToDo)
+Frontend Reactjs (ToDo)
