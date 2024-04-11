@@ -1,5 +1,5 @@
 URL Shortener - Study
 
-Backend Python FastAPI
+Backend: Python w/ FastAPI and Sqlite3 Database
 
-Frontend Reactjs (ToDo)
+Frontend: Reactjs (ToDo)
