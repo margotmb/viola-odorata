@@ -1,16 +1,21 @@
-function Shortener(){
-    const url = document.getElementById('')
-    const response = fetch('api_url',{
-        method: 'POST',
-        mode: 'cors',
-        credentials: "include",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify ({"url" : url})
-
+function Shortener() {
+  const api_url = "" + "/create_url_id/";
+  let url_field = document.getElementById("url").value;
+  try {
+    const url = new URL(url_field);
+    fetch(api_url, {
+      method: "POST",
+      mode: "cors",
+      body: JSON.stringify({ user_url: url.href }),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    })
+      .then((Response) => {
+        return Response.json();
       })
-    
-    console.log(response)
-
+      .then((data) => {
+        console.log(data);
+      });
+  } catch (e) {
+    alert("Invalid URL");
+  }
 }
