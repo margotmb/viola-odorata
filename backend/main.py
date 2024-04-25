@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from dbcrud import DBCrud
 from models.data import Data
@@ -39,9 +39,19 @@ app.add_middleware(
 )
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def home():
-    return "Homepage"
+    return """
+    <html>
+        <head>
+            <title> Homepage </title>
+        </head>
+        <body>
+            <h1> Homepage </h1>
+        </body>
+    </html>
+
+"""
 
 
 @app.get("/{url_id}")
