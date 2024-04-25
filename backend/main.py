@@ -1,12 +1,11 @@
 from fastapi import FastAPI
-from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.responses import RedirectResponse, HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from dbcrud import DBCrud
 from models.data import Data
-from models.request import Request
+from models.req_data import ReqData
 import random
 import string
-import json
 
 # Connector object
 con = DBCrud()
@@ -64,9 +63,9 @@ def read(url_id):
 
 
 @app.post("/create_url_id/")
-def create_url_id(req: Request):
+def create_url_id(req: ReqData):
     print(req.user_url)
     url_id = get_random_string(8)
-    # res = con.create_data(Data(user_url=user_url, url_identifier=url_id))
-    # print(res)
-    return json.dumps({"url_id": url_id})
+    res = con.create_data(Data(user_url=req.user_url, url_identifier=url_id))
+    print(res)
+    return JSONResponse({"url_id": url_id})
