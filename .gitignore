@@ -1,3 +1,7 @@
 .venv/
 venv/
 backend/__pycache__
+backend/models/__pycache__
+backend/url_shortener.db
+frontend/node_modules
+frontend/package-lock.json
