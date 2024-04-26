@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import './urlshortener.css';
+import './style/urlshortener.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function UrlShortener(){
