@@ -1,0 +1,32 @@
+.Auth-form-container {
+    border: 3px solid pink;
+    border-radius:10px;
+}
+  
+.Auth-form {
+    width: 450px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-radius: 6px;
+    background-color: white;
+}
+
+.Auth-form-title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 24px;
+    color: rgb(34, 34, 34);
+    font-weight: 800;
+}
+
+.Auth-form-content {
+padding-left: 20%;
+padding-right: 12%;
+display:flex;
+justify-content: space-around;
+
+}
+button{
+    background-color: pink;
+}
