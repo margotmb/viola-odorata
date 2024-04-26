@@ -3,7 +3,7 @@ from models.data import Data
 import re
 
 
-class DBCrud:
+class DBConnector:
     def __init__(self):
         self.__db_name = "url_shortener.db"
 

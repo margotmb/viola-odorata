@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse, HTMLResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from dbcrud import DBCrud
+from dbconnector import DBConnector
 from models.data import Data
 from models.req_data import ReqData
 import random
 import string
 
 # Connector object
-con = DBCrud()
+con = DBConnector()
 
 # Generate Tables
 con.create_table()
