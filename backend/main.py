@@ -13,10 +13,11 @@ con = DBCrud()
 # Generate Tables
 con.create_table()
 
+# Create a template data
 data = Data(user_url="https://google.com", url_identifier="abcde")
 con.create_data(data)
 
-
+# Generates random string for new url
 def get_random_string(length):
     # With combination of lower and upper case
     result_str = ''.join(random.choice(string.ascii_letters)
@@ -27,8 +28,8 @@ def get_random_string(length):
 # FastAPI -> 'uvicorn main:app --reload' to run local server
 app = FastAPI()
 
+# CORS
 origins = ["*"]
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -37,7 +38,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+# Home Route
 @app.get("/", response_class=HTMLResponse)
 def home():
     return """
@@ -52,16 +53,18 @@ def home():
 
 """
 
-
+# Get Url from url_id
+# Refactor RedirectResponse to JSONResponse
 @app.get("/{url_id}")
 def read(url_id):
+    # Checks database using DBCrud Connector
     query = con.read_url(url_id)
     if query:
         return RedirectResponse(query[0])
     else:
         return None
 
-
+# Creates data from user_url
 @app.post("/create_url_id/")
 def create_url_id(req: ReqData):
     print(req.user_url)
