@@ -14,6 +14,7 @@ class DBConnector:
     def create_table(self):
         connection = sqlite3.connect(self.__db_name)
         cursor = connection.cursor()
+        # Creates 'data' Table
         cursor.execute("""
         CREATE TABLE IF NOT EXISTS data (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -25,9 +26,12 @@ class DBConnector:
         connection.close()
 
     def create_data(self, data: Data):
+        # Adds HTTPS to url if no protocol
         regex_result = re.search("^http*", data.user_url)
         if (regex_result is None):
             data.user_url = "https://" + data.user_url
+        
+        # Insert to 'data' table
         connection = sqlite3.connect(self.__db_name)
         cur = connection.cursor()
         cur.execute("INSERT INTO data (user_url, url_identifier) VALUES (?, ?)",
@@ -39,6 +43,8 @@ class DBConnector:
     def read_url(self, data_string=None):
         connection = sqlite3.connect(self.__db_name)
         cur = connection.cursor()
+
+        # Select url from identifier
         res = cur.execute(
             "SELECT user_url from data WHERE url_identifier LIKE ?", [data_string])
         query = res.fetchone()
